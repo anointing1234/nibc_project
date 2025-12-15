@@ -206,11 +206,11 @@ UNFOLD = {
     "SITE_URL": "/",
     "SITE_ICON": {
         "light": lambda request: static("assets/images/logo-dark.png"),
-        "dark": lambda request: static("assets/images/logo-light.png "),
+        "dark": lambda request: static("assets/images/logo-light.png"),
     },
     "SITE_LOGO": {
         "light": lambda request: static("assets/images/logo-dark.png"),
-        "dark": lambda request: static("assets/images/logo-light.png "),
+        "dark": lambda request: static("assets/images/logo-light.png"),
     },
     "DASHBOARD": {
         "show_search": True,

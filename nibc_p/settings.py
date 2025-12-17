@@ -308,11 +308,11 @@ UNFOLD = {
                     #     "icon": "bar_chart",
                     #     "link": reverse_lazy("admin:accounts_exchangerate_changelist"),
                     # },
-                    {
-                        "title": _("Loan Requests"),
-                        "icon": "request_quote",
-                        "link": reverse_lazy("admin:accounts_loanrequest_changelist"),
-                    },
+                    # {
+                    #     "title": _("Loan Requests"),
+                    #     "icon": "request_quote",
+                    #     "link": reverse_lazy("admin:accounts_loanrequest_changelist"),
+                    # },
                     {
                         "title": _("Payment Gateways"),
                         "icon": "payment",

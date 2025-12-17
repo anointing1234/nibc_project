@@ -107,88 +107,88 @@ class AccountBalanceAdmin(ModelAdmin):
     exclude = ("available_balance",)   # 👈 hides field in edit form
 
 
-@admin.register(LoanRequest)
-class LoanRequestAdmin(ModelAdmin):
-    list_display = ("user", "amount", "currency", "status", "approval_date", "disbursement_date", "date", "approve_button", "decline_button")
-    list_filter = ("status", "currency", "date")
-    search_fields = ("user__email", "loan_type")
-    ordering = ("-date",)
-    readonly_fields = ("approval_date", "disbursement_date", "approved_by")
-    actions = ["approve_loans", "decline_loans"]
-    fieldsets = (
-        ("Loan Details", {
-            "fields": (
-                "user", "amount", "currency", "loan_type", "reason",
-                "term_months", "interest_rate", "collateral", "status",
-                "status_detail", "approval_date", "disbursement_date", "repayment_start_date", "approved_by"
-            )
-        }),
-    )
+# @admin.register(LoanRequest)
+# class LoanRequestAdmin(ModelAdmin):
+#     list_display = ("user", "amount", "currency", "status", "approval_date", "disbursement_date", "date", "approve_button", "decline_button")
+#     list_filter = ("status", "currency", "date")
+#     search_fields = ("user__email", "loan_type")
+#     ordering = ("-date",)
+#     readonly_fields = ("approval_date", "disbursement_date", "approved_by")
+#     actions = ["approve_loans", "decline_loans"]
+#     fieldsets = (
+#         ("Loan Details", {
+#             "fields": (
+#                 "user", "amount", "currency", "loan_type", "reason",
+#                 "term_months", "interest_rate", "collateral", "status",
+#                 "status_detail", "approval_date", "disbursement_date", "repayment_start_date", "approved_by"
+#             )
+#         }),
+#     )
 
-    def approve_button(self, obj):
-        if obj.status == "pending":
-            return format_html(
-                '<a class="button" href="?approve_loan={}" style="background-color:#28a745;color:white;padding:5px 10px;border-radius:3px;">Approve</a>',
-                obj.id
-            )
-        return "Approved"
-    approve_button.short_description = "Approve"
+#     def approve_button(self, obj):
+#         if obj.status == "pending":
+#             return format_html(
+#                 '<a class="button" href="?approve_loan={}" style="background-color:#28a745;color:white;padding:5px 10px;border-radius:3px;">Approve</a>',
+#                 obj.id
+#             )
+#         return "Approved"
+#     approve_button.short_description = "Approve"
 
-    def decline_button(self, obj):
-        if obj.status == "pending":
-            return format_html(
-                '<a class="button" href="?decline_loan={}" style="background-color:#dc3545;color:white;padding:5px 10px;border-radius:3px;">Decline</a>',
-                obj.id
-            )
-        return "Declined"
-    decline_button.short_description = "Decline"
+#     def decline_button(self, obj):
+#         if obj.status == "pending":
+#             return format_html(
+#                 '<a class="button" href="?decline_loan={}" style="background-color:#dc3545;color:white;padding:5px 10px;border-radius:3px;">Decline</a>',
+#                 obj.id
+#             )
+#         return "Declined"
+#     decline_button.short_description = "Decline"
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        approve_id = request.GET.get("approve_loan")
-        decline_id = request.GET.get("decline_loan")
-        if approve_id:
-            loan = get_object_or_404(LoanRequest, id=approve_id)
-            if loan.status == "pending":
-                self.approve_single_loan(request, loan)
-        if decline_id:
-            loan = get_object_or_404(LoanRequest, id=decline_id)
-            if loan.status == "pending":
-                self.decline_single_loan(request, loan)
-        return qs
+#     def get_queryset(self, request):
+#         qs = super().get_queryset(request)
+#         approve_id = request.GET.get("approve_loan")
+#         decline_id = request.GET.get("decline_loan")
+#         if approve_id:
+#             loan = get_object_or_404(LoanRequest, id=approve_id)
+#             if loan.status == "pending":
+#                 self.approve_single_loan(request, loan)
+#         if decline_id:
+#             loan = get_object_or_404(LoanRequest, id=decline_id)
+#             if loan.status == "pending":
+#                 self.decline_single_loan(request, loan)
+#         return qs
 
-    def approve_single_loan(self, request, loan):
-        loan.status = "approved"
-        loan.approval_date = timezone.now()
-        loan.approved_by = request.user
-        loan.disbursement_date = timezone.now()
-        loan.save()
-        user_balance, _ = AccountBalance.objects.get_or_create(account=loan.user)
-        user_balance.loan_balance += loan.amount
-        user_balance.total_credits += loan.amount
-        user_balance.save()
-        messages.success(request, f"Loan {loan.id} approved and {loan.amount} credited to user.")
+#     def approve_single_loan(self, request, loan):
+#         loan.status = "approved"
+#         loan.approval_date = timezone.now()
+#         loan.approved_by = request.user
+#         loan.disbursement_date = timezone.now()
+#         loan.save()
+#         user_balance, _ = AccountBalance.objects.get_or_create(account=loan.user)
+#         user_balance.loan_balance += loan.amount
+#         user_balance.total_credits += loan.amount
+#         user_balance.save()
+#         messages.success(request, f"Loan {loan.id} approved and {loan.amount} credited to user.")
 
-    def decline_single_loan(self, request, loan):
-        loan.status = "declined"
-        loan.approval_date = timezone.now()
-        loan.approved_by = request.user
-        loan.save()
-        messages.warning(request, f"Loan {loan.id} has been declined.")
+#     def decline_single_loan(self, request, loan):
+#         loan.status = "declined"
+#         loan.approval_date = timezone.now()
+#         loan.approved_by = request.user
+#         loan.save()
+#         messages.warning(request, f"Loan {loan.id} has been declined.")
 
-    def approve_loans(self, request, queryset):
-        for loan in queryset:
-            if loan.status == "pending":
-                self.approve_single_loan(request, loan)
-        messages.success(request, "Selected loans have been approved.")
-    approve_loans.short_description = "Approve selected loans"
+#     def approve_loans(self, request, queryset):
+#         for loan in queryset:
+#             if loan.status == "pending":
+#                 self.approve_single_loan(request, loan)
+#         messages.success(request, "Selected loans have been approved.")
+#     approve_loans.short_description = "Approve selected loans"
 
-    def decline_loans(self, request, queryset):
-        for loan in queryset:
-            if loan.status == "pending":
-                self.decline_single_loan(request, loan)
-        messages.warning(request, "Selected loans have been declined.")
-    decline_loans.short_description = "Decline selected loans"
+#     def decline_loans(self, request, queryset):
+#         for loan in queryset:
+#             if loan.status == "pending":
+#                 self.decline_single_loan(request, loan)
+#         messages.warning(request, "Selected loans have been declined.")
+#     decline_loans.short_description = "Decline selected loans"
 
 
 @admin.register(Transaction)

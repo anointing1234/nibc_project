@@ -233,8 +233,8 @@
             <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">Available Balance</p>
             <h6 class="mb-0 d-flex align-items-center gap-2" style="font-size:16px;">
               <span id="available-balance-savings" 
-                    data-balance=" €{{ request.user.account_balance.checking_balance|intcomma }}">
-                 €{{ request.user.account_balance.available_balance|intcomma }}
+                    data-balance=" ${{ request.user.account_balance.checking_balance|intcomma }}">
+                 ${{ request.user.account_balance.available_balance|intcomma }}
               </span>
               <i class="fa-solid fa-eye fa-sm toggle-balance-icon" 
                  data-target="available-balance-savings" 
@@ -249,10 +249,10 @@
         </div>
        <div class="row mt-2">
           <div class="col-4 text-start">
-            <p style="font-size:10px;" class="card-category text-gray">Credits <span> €{{ request.user.account_balance.total_credits|intcomma }}</span></p>
+            <p style="font-size:10px;" class="card-category text-gray">Credits <span> ${{ request.user.account_balance.total_credits|intcomma }}</span></p>
           </div>
           <div class="col-4 text-start">
-            <p style="font-size:10px;" class="card-category text-gray">Debits <span> €{{ request.user.account_balance.total_debits|intcomma }}</span></p>
+            <p style="font-size:10px;" class="card-category text-gray">Debits <span> ${{ request.user.account_balance.total_debits|intcomma }}</span></p>
           </div>
         </div>
       </div>
@@ -266,8 +266,8 @@
             <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">Checking Account</p>
             <h6 class="mb-0 d-flex align-items-center gap-2" style="font-size:16px;">
               <span id="available-balance-checking" 
-                    data-balance=" €{{ request.user.account_balance.checking_balance|intcomma }}">
-                 €{{ request.user.account_balance.checking_balance|intcomma }}
+                    data-balance=" ${{ request.user.account_balance.checking_balance|intcomma }}">
+                 ${{ request.user.account_balance.checking_balance|intcomma }}
               </span>
               <i class="fa-solid fa-eye fa-sm toggle-balance-icon" 
                  data-target="available-balance-checking" 
@@ -282,10 +282,10 @@
         </div>
         <div class="row mt-2">
           <div class="col-4 text-start">
-            <p style="font-size:10px;" class="card-category text-gray">Credits <span> €{{ request.user.account_balance.total_credits|intcomma }}</span></p>
+            <p style="font-size:10px;" class="card-category text-gray">Credits <span> ${{ request.user.account_balance.total_credits|intcomma }}</span></p>
           </div>
           <div class="col-4 text-start">
-            <p style="font-size:10px;" class="card-category text-gray">Debits <span> €{{ request.user.account_balance.total_debits|intcomma }}</span></p>
+            <p style="font-size:10px;" class="card-category text-gray">Debits <span> ${{ request.user.account_balance.total_debits|intcomma }}</span></p>
           </div>
         </div>
       </div>
@@ -299,8 +299,8 @@
             <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">Loan Balance</p>
             <h6 class="mb-0 d-flex align-items-center gap-2" style="font-size:16px;">
               <span id="available-balance-loan" 
-                    data-balance=" €{{ request.user.account_balance.loan_balance|intcomma }}">
-                 €{{ request.user.account_balance.loan_balance|intcomma }}
+                    data-balance=" ${{ request.user.account_balance.loan_balance|intcomma }}">
+                 ${{ request.user.account_balance.loan_balance|intcomma }}
               </span>
               <i class="fa-solid fa-eye fa-sm toggle-balance-icon" 
                  data-target="available-balance-loan" 
@@ -319,7 +319,7 @@
   <div class="row mt-3">
       <div class="col-4 text-start">
           <p style="font-size:10px;" class="card-category text-gray">
-              Payments <span> €{{ loan.amount|intcomma }}</span>
+              Payments <span> ${{ loan.amount|intcomma }}</span>
           </p>
       </div>
       <div class="col-4 text-start">
@@ -369,8 +369,8 @@
             <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">EUR Account</p>
             <h6 class="mb-0 d-flex align-items-center gap-2" style="font-size:16px;">
               <span id="available-balance-eur" 
-                    data-balance="€{{ request.user.account_balance.eur|intcomma }}">
-                €{{ request.user.account_balance.eur|intcomma }}
+                    data-balance="${{ request.user.account_balance.eur|intcomma }}">
+                ${{ request.user.account_balance.eur|intcomma }}
               </span>
               <i class="fa-solid fa-eye fa-sm toggle-balance-icon" 
                  data-target="available-balance-eur" 
@@ -451,7 +451,7 @@
 
       <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
         <h6 class="mb-0 fw-bold" style="font-size: 18px;">
-           €{{ total_amount|intcomma }}
+           ${{ total_amount|intcomma }}
         </h6>
 
         <span class="text-sm fw-semibold rounded-pill bg-success-focus text-success-main border border-success px-3 py-1 d-flex align-items-center gap-1">
@@ -459,7 +459,7 @@
         </span>
 
         <span class="text-xs fw-medium text-gray">
-          +  €{{ per_day_avg|intcomma }} Per Day
+          +  ${{ per_day_avg|intcomma }} Per Day
         </span>
       </div>
 
@@ -543,7 +543,7 @@
             <tr>
               <td>{{ tx.transaction_date|date:"M d, Y H:i" }}</td>
               <td>{{ tx.get_transaction_type_display }}</td>
-              <td> €{{ tx.amount }}</td>
+              <td> ${{ tx.amount }}</td>
               <td>{{ tx.description|default:"—" }}</td>
               <td class="text-center">
                 {% if tx.status == "completed" %}

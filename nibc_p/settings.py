@@ -42,8 +42,8 @@ DEBUG = False
 # ALLOWED_HOSTS = ["*"]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = False
-CSRF_TRUSTED_ORIGINS = ["https://nibc-nl.com","https://www.nibc-nl.com"]
-ALLOWED_HOSTS = ["nibc-nl.com","www.nibc-nl.com"]
+CSRF_TRUSTED_ORIGINS = ["https://nibc-nl.com","https://www.nibc-nl.com","https://nibc-project.onrender.com"]
+ALLOWED_HOSTS = ["nibc-nl.com","www.nibc-nl.com","nibc-project.onrender.com"]
 
 
 
@@ -204,12 +204,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FROM_EMAIL = 'info@nibc-nl.com'
 
-RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+# RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
-if not RESEND_API_KEY:
-    print("❌ RESEND_API_KEY not found in environment!")
-else:
-    print("✅ RESEND_API_KEY loaded successfully")
+# if not RESEND_API_KEY:
+#     print("❌ RESEND_API_KEY not found in environment!")
+# else:
+#     print("✅ RESEND_API_KEY loaded successfully")
 
 
 

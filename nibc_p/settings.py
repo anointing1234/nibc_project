@@ -40,7 +40,9 @@ SECRET_KEY = 'django-insecure-ss+9%9tr-2!1&2jli2_a3iviu@y!88@3r@1m(%i46!)_qlk%!b
 DEBUG = False
 
 # ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://nibc-nl.com"]
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = False
+CSRF_TRUSTED_ORIGINS = ["https://nibc-nl.com","https://www.nibc-nl.com"]
 ALLOWED_HOSTS = ["nibc-nl.com","www.nibc-nl.com"]
 
 
@@ -120,16 +122,30 @@ WSGI_APPLICATION = 'nibc_p.wsgi.application'
 
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME'),  
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
+#         'HOST': env('DB_HOST'),
+#         'PORT': env('DB_PORT'),
+#     }
+# }
+
+
+
+import dj_database_url
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),  
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
+
 
 
 

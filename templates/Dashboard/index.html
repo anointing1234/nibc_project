@@ -230,7 +230,7 @@
       <div class="card-body p-15">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
           <div>
-            <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">Available Balance</p>
+            <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">USDT/TRC-20 Coins</p>
             <h6 class="mb-0 d-flex align-items-center gap-2" style="font-size:16px;">
               <span id="available-balance-savings" 
                     data-balance=" ${{ request.user.account_balance.checking_balance|intcomma }}">
@@ -343,8 +343,8 @@
             <p class="fw-medium text-primary-light mb-1" style="font-size:14px;">GBP Account</p>
             <h6 class="mb-0 d-flex align-items-center gap-2" style="font-size:16px;">
               <span id="available-balance-gbp" 
-                    data-balance="£{{ request.user.account_balance.gbp|intcomma }}">
-                £{{ request.user.account_balance.gbp|intcomma }}
+                    data-balance="${{ request.user.account_balance.gbp|intcomma }}">
+                ${{ request.user.account_balance.gbp|intcomma }}
               </span>
               <i class="fa-solid fa-eye fa-sm toggle-balance-icon" 
                  data-target="available-balance-gbp" 
